@@ -5,7 +5,7 @@
         <script src="airtable.browser.js"></script>
     </head>
     <body>
-        <h1>Artists</h1>
+        <h1>Properties</h1>
         <div id="artists"></div>
 
         <hr/>
@@ -17,7 +17,7 @@
     <script>
 var Airtable = require('airtable');
 // Get a base ID for an instance of art gallery example
-var base = new Airtable({ apiKey: 'FILL_OUT_API_KEY' }).base('FILL_OUT_BASE_ID');
+var base = new Airtable({ apiKey: 'keyx6QpRuHDEBNmCB' }).base('appici2MzEeOvTBii');
 
 var deleteArtist = function(record) {
     record.destroy(function(err) {
@@ -30,20 +30,20 @@ var deleteArtist = function(record) {
     });
 };
 
-var loadArtists = function() {
+var loadProperties = function() {
     $('#artists').empty();
 
-    base('Artists').select({
+    base('Properties').select({
         sort: [
-            {field: 'Name', direction: 'asc'}
+            {field: 'Property', direction: 'asc'}
         ]
     }).eachPage(function page(records, fetchNextPage) {
         records.forEach(function(record) {
-            console.log('Retrieved ', record.get('Name'));
+            console.log('Retrieved ', record.get('Photos'));
 
             var $artistInfo = $('<div>');
-            $artistInfo.append($('<h3>').text(record.get('Name')));
-            $artistInfo.append($('<div>').text(record.get('Bio')));
+            $artistInfo.append($('<h3>').text(record.get('Property')));
+            $artistInfo.append($('<div>').text(record.get('Status')));
             var x = $('<button>').text('Delete').click(function() {
                 deleteArtist(record);
             });
@@ -59,22 +59,7 @@ var loadArtists = function() {
     });
 };
 
-$('#create').click(function(){
-    base('Artists').create({
-        "Name": "Al Held",
-        "Bio": "Al Held began his painting career by exhibiting Abstract Expressionist works in New York; he later turned to hard-edged geometric paintings that were ...",
-        "Genre": [
-            "American Abstract Expressionism",
-            "Color Field"
-        ],
-        "On Display?": true
-    }, function(err, record) {
-        if (err) { console.log(err); return; }
-        loadArtists();
-    });
-});
-
-loadArtists();
+loadProperties();
 
 </script>
 </html>
